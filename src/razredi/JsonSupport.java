@@ -1,6 +1,6 @@
 package razredi;
 
-import com.google.gson.*;
+import java.util.List;
 
 public interface JsonSupport {
     String toJson();

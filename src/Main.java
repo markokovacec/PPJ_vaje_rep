@@ -1,13 +1,11 @@
-import razredi.SeznamRacunov;
-import razredi.Artikel;
-import razredi.Racun;
-import razredi.Artikli;
-import razredi.Podjetje;
+import razredi.*;
+
+import java.io.IOException;
 
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
         String s="Ovitek";
         String ss="Steklo";
@@ -60,6 +58,11 @@ public class Main {
         sez.dodajRacun(rac1);
         sez.dodajRacun(rac2);
         sez.dodajRacun(rac3);
+
+        Invoices in = new Invoices();
+        in.addInvoiceList(sez);
+        in.writeJson();
+        in.readJson();
 
         sez.izpisiRacune();
 
