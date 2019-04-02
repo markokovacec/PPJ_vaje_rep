@@ -1,4 +1,7 @@
 package razredi;
+import com.google.gson.Gson;
+
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -31,5 +34,19 @@ public class Artikli {
         for (int i=0; i< seznam.size();i++) {
             System.out.print(seznam.get(i).artikelString());
         }
+    }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        List<Artikel> seznam = getSeznam();
+        String json = gson.toJson(seznam);
+        return json;
+    }
+
+
+    public String fromJson(String json) {
+        Gson gson = new Gson();
+        List<Artikel> seznam2 = gson.fromJson(json, (Type) seznam);
+        return null;
     }
 }
