@@ -1,128 +1,117 @@
 package razredi;
 
-
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.UUID;
 
-import static java.math.RoundingMode.HALF_EVEN;
-
-/**
- * Datum in ID se lahko nastavitva tukaj, popravi datum, naj ne bo String.
- */
-
-
-
 public class Racun implements Searchable {
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     private String izdajatelj;
-    //private int id;
-    //za id je boljse uporabit UUID uudi= UUID.randomUUID(); da ne pride do podvojitve ID
-    private Date datum;
+    private Date datum = new Date();
     private Artikli artikli;
     private double skupaj;
     private int kupec_DDV;
     private Podjetje podjetje;
     Boolean kupec_podjetje;
-   // private String[] davek={"22%","9.5%"};
 
-    public Racun (Artikli artikli, String izdajatelj, Boolean kupec_podjetje, Podjetje podjetje){
-        //this.id=id;
-        //this.datum=datum;
-        this.id=UUID.randomUUID();
-        this.datum= new Date();
-        this.artikli=artikli;
-        this.podjetje=podjetje;
-        this.izdajatelj=izdajatelj;
-        this.kupec_podjetje=kupec_podjetje;
-        if(this.kupec_podjetje==true){
-            kupec_DDV=dodajDavcnoKupca();
+    public Racun(Artikli artikli, String izdajatelj, Boolean kupec_podjetje, Podjetje podjetje) {
+        this.artikli = artikli;
+        this.podjetje = podjetje;
+        this.izdajatelj = izdajatelj;
+        this.kupec_podjetje = kupec_podjetje;
+        if (this.kupec_podjetje) {
+            this.kupec_DDV = this.dodajDavcnoKupca();
         }
+
     }
 
-
-    private int dodajDavcnoKupca (){
-        return podjetje.getDavcna();
+    private int dodajDavcnoKupca() {
+        return this.podjetje.getDavcna();
     }
 
-
-
-    public void racunString(){
-        if(podjetje.getDavcni_zavezanec()==true) {
+    public void racunString() {
+        if (this.podjetje.getDavcni_zavezanec()) {
             System.out.println("--------------------------------------");
             System.out.print(System.lineSeparator());
-            System.out.print("ID računa:"+id);
+            System.out.print("ID računa:" + this.id);
             System.out.print(System.lineSeparator());
-            System.out.println("Izdajatelj:" + izdajatelj);
+            System.out.println("Izdajatelj:" + this.izdajatelj);
             System.out.print(System.lineSeparator());
-            System.out.print("Kupec:"
-                    +podjetje.getImePodjetja() +" "
-                    +"DDV: SI"+kupec_DDV
-                    );
+            System.out.print("Kupec:" + this.podjetje.getImePodjetja() + " DDV: SI" + this.kupec_DDV);
             System.out.print(System.lineSeparator());
-            System.out.print("Datum: " + datum + System.lineSeparator()
-                    + "Nakup:"
-            );
+            System.out.print("Datum: " + this.datum + System.lineSeparator() + "Nakup:");
             System.out.print(System.lineSeparator());
-            artikli.seznamString();
+            this.artikli.seznamString();
             System.out.print(System.lineSeparator());
             System.out.print(System.lineSeparator());
-            System.out.println("Skupni znesek: " + getZnesekRacuna() + "€");
+            System.out.println("Skupni znesek: " + this.getZnesekRacuna() + "€");
             System.out.println("--------------------------------------");
-        }
-        else {
-
+        } else {
             System.out.println("--------------------------------------");
             System.out.print(System.lineSeparator());
-            System.out.println("Izdajatelj:" + izdajatelj);
+            System.out.println("Izdajatelj:" + this.izdajatelj);
             System.out.print(System.lineSeparator());
-            System.out.println("ID DDV kupca: ID" + izdajatelj);
+            System.out.println("ID DDV kupca: ID" + this.izdajatelj);
             System.out.print(System.lineSeparator());
-            System.out.print("ID računa: " + id + System.lineSeparator()
-                    + "Datum: " + datum + System.lineSeparator()
-                    + "Nakup:"
-            );
+            System.out.print("ID računa: " + this.id + System.lineSeparator() + "Datum: " + this.datum + System.lineSeparator() + "Nakup:");
             System.out.print(System.lineSeparator());
-            artikli.seznamString();
+            this.artikli.seznamString();
             System.out.print(System.lineSeparator());
             System.out.print(System.lineSeparator());
-            System.out.println("Skupni znesek: " + getZnesekRacuna() + "€");
+            System.out.println("Skupni znesek: " + this.getZnesekRacuna() + "€");
             System.out.println("--------------------------------------");
         }
+
     }
 
-    public void deleteArikel(int i){
-        artikli.brisiArtikel(i);
+    public void deleteArikel(int i) {
+        this.artikli.brisiArtikel(i);
     }
 
-    public BigDecimal getZnesekRacuna (){
+    public BigDecimal getZnesekRacuna() {
+        this.skupaj = 0.0D;
 
-        skupaj=0;
-        for(int i=0;i<artikli.getSeznam().size();i++){
-            skupaj=skupaj + artikli.getSeznam().get(i).getCena();
+        for(int i = 0; i < this.artikli.getSeznam().size(); ++i) {
+            this.skupaj += ((Artikel)this.artikli.getSeznam().get(i)).getCena();
         }
-        //System.out.println("Cena brez dveh decimalk: "+skupaj);
 
-        MathContext mc = new MathContext(5, HALF_EVEN);
-        BigDecimal Znesek = new BigDecimal(skupaj).round(mc);
-
-
-
+        MathContext mc = new MathContext(5, RoundingMode.HALF_EVEN);
+        BigDecimal Znesek = (new BigDecimal(this.skupaj)).round(mc);
         return Znesek;
-
     }
 
-    @Override
     public Boolean Search(String niz) {
-        Boolean rezultat=false;
-        if(niz.equals(this.datum.toString())) rezultat=true;
-        if(niz.equals(izdajatelj))rezultat=true;
-        if(niz.equals(id.toString())) rezultat=true;
-        if(niz.equals(artikli.getSeznam().toString()))rezultat=true;
-        if(niz.equals(podjetje.ime.toString()))rezultat=true;
-        if(niz.equals(String.valueOf(skupaj)))rezultat=true;
-        if (niz.equals(String.valueOf(kupec_DDV))) rezultat=true;
+        Boolean rezultat = false;
+        if (niz.equals(this.datum.toString())) {
+            rezultat = true;
+        }
+
+        if (niz.equals(this.izdajatelj)) {
+            rezultat = true;
+        }
+
+        if (niz.equals(this.id.toString())) {
+            rezultat = true;
+        }
+
+        if (niz.equals(this.artikli.getSeznam().toString())) {
+            rezultat = true;
+        }
+
+        if (niz.equals(this.podjetje.ime.toString())) {
+            rezultat = true;
+        }
+
+        if (niz.equals(String.valueOf(this.skupaj))) {
+            rezultat = true;
+        }
+
+        if (niz.equals(String.valueOf(this.kupec_DDV))) {
+            rezultat = true;
+        }
+
         return rezultat;
     }
 }
