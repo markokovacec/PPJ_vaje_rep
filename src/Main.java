@@ -36,8 +36,8 @@ public class Main {
 
 
         Artikli nevem= new Artikli();
-        Podjetje p1 = new Podjetje("Fukich d.o.o.", 1196332000, 56498789,true);
-        Podjetje p2 = new Podjetje("Goran Karan S.P.",1468952000, 12544487,false);
+        Podjetje p1 = new Podjetje("Blabla d.o.o.", 1196332000, 56498789,true);
+        Podjetje p2 = new Podjetje("Goran S.P.",1468952000, 12544487,false);
         Podjetje p3 = new Podjetje("ŽUPNIJA STARA CERKEV",1753037000,91803721,false);
 
         nevem.dodajSeznam(a1);System.out.print(System.lineSeparator());
