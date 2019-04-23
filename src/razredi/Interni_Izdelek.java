@@ -1,55 +1,49 @@
 package razredi;
 
 
-enum Oddelek{
-    sadje(211), zelenjava (222), meso(210), mlecni_izdelki(232)
-    ;
-    private final int koda;
-    Oddelek(int koda){
-        this.koda=koda;
-    }
-    public  int getCode(){
-        return this.koda;
-    }
-}
-
-enum Izdelek{
-    Banana(6789), Korenje(5566), Krompir(9876), Kruh(6464)
-    ;
-    private  final int koda;
-    Izdelek(int koda){
-        this.koda=koda;
-    }
-
-    public int getCode(){
-        return this.koda;
-    }
-}
-
 public class Interni_Izdelek {
-    Izdelek izdelek;
-    Oddelek oddelek;
-    int teza;
+    public Izdelek izdelek;
+    public Oddelek oddelek;
+    String teza;
     double cena_gram;
     double cena;
     String ean;
 
-    public Interni_Izdelek (Izdelek izdelek, Oddelek oddelek, int teza, double cena){
+    public Interni_Izdelek (Izdelek izdelek, Oddelek oddelek, String teza, double cena){
         this.izdelek=izdelek;
         this.oddelek=oddelek;
         this.cena_gram=cena;
         this.teza=teza;
-        this.cena=makeCena(this.teza, this.cena_gram);
-        makeEAN();
+        this.cena=makeCena(Integer.parseInt(this.teza), this.cena_gram);
+        this.ean=makeEAN();
     }
 
-    void makeEAN(){
+    private String makeEAN(){
         ean= ""+oddelek.getCode()+""+izdelek.getCode()+""+teza;
         ean=ean+""+checkDig(ean);
+        return ean;
     }
 
     double makeCena(int teza, double cena_gram){
         return teza*cena_gram;
+    }
+
+    void changeWeight(String n){
+        this.teza=n;
+        this.cena=makeCena(Integer.parseInt(this.teza), this.cena_gram);
+        ean=makeEAN();
+    }
+
+    double getCena(){return cena;}
+
+    public String interniString(){
+        return  System.lineSeparator()
+                + izdelek.toString()
+                +"  "+ cena + "€ | "
+                + " Teža: " + teza +"g | "
+                + " | EAN: "+ ean +" |"
+                + " | CheckDigit: "
+                ;
     }
 
     int checkDig(String ean){

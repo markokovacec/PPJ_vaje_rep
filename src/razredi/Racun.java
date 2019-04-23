@@ -43,7 +43,7 @@ public class Racun implements Searchable {
             System.out.print(System.lineSeparator());
             System.out.print("Datum: " + this.datum + System.lineSeparator() + "Nakup:");
             System.out.print(System.lineSeparator());
-            this.artikli.seznamString();
+            this.artikli.artikliString();
             System.out.print(System.lineSeparator());
             System.out.print(System.lineSeparator());
             System.out.println("Skupni znesek: " + this.getZnesekRacuna() + "€");
@@ -57,7 +57,7 @@ public class Racun implements Searchable {
             System.out.print(System.lineSeparator());
             System.out.print("ID računa: " + this.id + System.lineSeparator() + "Datum: " + this.datum + System.lineSeparator() + "Nakup:");
             System.out.print(System.lineSeparator());
-            this.artikli.seznamString();
+            this.artikli.artikliString();
             System.out.print(System.lineSeparator());
             System.out.print(System.lineSeparator());
             System.out.println("Skupni znesek: " + this.getZnesekRacuna() + "€");
@@ -73,8 +73,12 @@ public class Racun implements Searchable {
     public BigDecimal getZnesekRacuna() {
         this.skupaj = 0.0D;
 
-        for(int i = 0; i < this.artikli.getSeznam().size(); ++i) {
-            this.skupaj += ((Artikel)this.artikli.getSeznam().get(i)).getCena();
+        for(int i = 0; i < this.artikli.getSeznamArtikel().size(); ++i) {
+            this.skupaj += this.artikli.getSeznamArtikel().get(i).getCena();
+        }
+
+        for(int i = 0; i < this.artikli.getSeznamInterniArtikel().size(); ++i) {
+            this.skupaj += this.artikli.getSeznamInterniArtikel().get(i).getCena();
         }
 
         MathContext mc = new MathContext(5, RoundingMode.HALF_EVEN);
@@ -96,11 +100,11 @@ public class Racun implements Searchable {
             rezultat = true;
         }
 
-        if (niz.equals(this.artikli.getSeznam().toString())) {
+        if (niz.equals(this.artikli.getSeznamArtikel().toString())) {
             rezultat = true;
         }
 
-        if (niz.equals(this.podjetje.ime.toString())) {
+        if (niz.equals(this.podjetje.ime)) {
             rezultat = true;
         }
 

@@ -30,6 +30,10 @@ public class Main {
         Artikel a2= new Artikel(ss,cc,ee,i,0);
         Artikel a3= new Artikel(sss,ccc,eee,i+3,1);
 
+        Interni_Izdelek i1 = new Interni_Izdelek(Izdelek.Banana,Oddelek.sadje, "0023", 0.22);
+        Interni_Izdelek i2 = new Interni_Izdelek(Izdelek.Korenje,Oddelek.zelenjava, "0010", 0.12);
+        Interni_Izdelek i3 = new Interni_Izdelek(Izdelek.Kruh,Oddelek.pekovski_izdelki, "0130", 0.08);
+
         a1.eanCountry(e);
         a1.eanCountry(ee);
         a1.eanCountry(eee);
@@ -40,9 +44,12 @@ public class Main {
         Podjetje p2 = new Podjetje("Goran S.P.",1468952000, 12544487,false);
         Podjetje p3 = new Podjetje("ŽUPNIJA STARA CERKEV",1753037000,91803721,false);
 
-        nevem.dodajSeznam(a1);System.out.print(System.lineSeparator());
-        nevem.dodajSeznam(a2);System.out.print(System.lineSeparator());
-        nevem.dodajSeznam(a3);System.out.print(System.lineSeparator());
+        nevem.dodaj_artikel(a1);System.out.print(System.lineSeparator());
+        nevem.dodaj_artikel(a2);System.out.print(System.lineSeparator());
+        nevem.dodaj_artikel(a3);System.out.print(System.lineSeparator());
+        nevem.dodajInterniArtikel(i1);
+        nevem.dodajInterniArtikel(i2);
+        nevem.dodajInterniArtikel(i3);
 
         //izdelava racuna in seznama
        /* System.out.print(System.lineSeparator());
