@@ -13,32 +13,6 @@ import static java.math.RoundingMode.UP;
  * Davek naj bo globalna spremenljivka ki se dodaja
  */
 
-enum Oddelek{
-    sadje(211), zelenjava (222), meso(210), mlecni_izdelki(232)
-        ;
-    private final int koda;
-    Oddelek(int koda){
-        this.koda=koda;
-    }
-    public  int getCode(){
-        return this.koda;
-    }
-}
-
-enum Izdelek{
-    Banana(6789), Korenje(5566), Mleko(2564), Krompir(9876), Kruh(6464)
-    ;
-    private  final int koda;
-    Izdelek(int koda){
-        this.koda=koda;
-    }
-
-    public int getCode(){
-        return this.koda;
-    }
-}
-
-
 public class Artikel implements Searchable {
     private String ime;
     private double cena;
