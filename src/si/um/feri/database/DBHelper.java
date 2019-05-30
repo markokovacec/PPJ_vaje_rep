@@ -18,6 +18,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.*;
 
 public class DBHelper {
     private static   BasicDataSource dataSource;
@@ -32,7 +36,6 @@ public class DBHelper {
             ds.setMinIdle(5);
             ds.setMaxIdle(10);
             ds.setMaxOpenPreparedStatements(100);
-
             dataSource=ds;
         }
         return dataSource;
@@ -51,7 +54,7 @@ public class DBHelper {
         Properties prop = new Properties();
             try{
 
-                String propFileName="login.properties";
+                String propFileName="resources/login.properties";
                 inputstream=cl.getResourceAsStream(propFileName);
                 if(inputstream!= null){
                     prop.load(inputstream);

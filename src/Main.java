@@ -1,11 +1,15 @@
 import razredi.*;
-import si.um.feri.database.DBHelper;
+import si.um.feri.database.*;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.*;
 
 
 public class Main {
@@ -77,8 +81,11 @@ public class Main {
         in.readJson();
 
         sez.izpisiRacune();
-
+        System.out.print(System.lineSeparator());
+        System.out.print("SQL:");
+        System.out.print(System.lineSeparator());
         //Naloga 4 SQL
+
         Connection connection = DBHelper.getConnection();
         PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM film");
         ResultSet resultSet=pstmt.executeQuery();
