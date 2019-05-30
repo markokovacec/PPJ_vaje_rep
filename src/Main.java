@@ -1,11 +1,16 @@
 import razredi.*;
+import si.um.feri.database.DBHelper;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
 
         String s="Ovitek";
         String ss="Steklo";
@@ -72,6 +77,14 @@ public class Main {
         in.readJson();
 
         sez.izpisiRacune();
+
+        //Naloga 4 SQL
+        Connection connection = DBHelper.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM film");
+        ResultSet resultSet=pstmt.executeQuery();
+        while(resultSet.next()){
+            System.out.println(resultSet.getString(1)+","+resultSet.getString(2));
+        }
 
     }
 
