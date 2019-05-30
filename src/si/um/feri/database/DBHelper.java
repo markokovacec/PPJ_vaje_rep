@@ -19,8 +19,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
-import static java.lang.ClassLoader.getClassLoader;
-
 public class DBHelper {
     private static   BasicDataSource dataSource;
 
